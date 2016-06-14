@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 1
+Release  : 2
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -15,6 +15,7 @@ Requires: syslinux-data
 BuildRequires : asciidoc
 BuildRequires : nasm-bin
 BuildRequires : pkgconfig(uuid)
+Patch1: fix-alignment-change-gcc-5.patch
 
 %description
 SYSLINUX is a suite of bootloaders, currently supporting DOS FAT
@@ -52,6 +53,7 @@ dev components for the syslinux package.
 
 %prep
 %setup -q -n syslinux-6.03
+%patch1 -p1
 
 %build
 make V=1  %{?_smp_mflags}
