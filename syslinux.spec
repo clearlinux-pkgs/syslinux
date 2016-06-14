@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 5
+Release  : 6
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -53,6 +53,14 @@ Provides: syslinux-devel
 dev components for the syslinux package.
 
 
+%package extras
+Summary: extras components for the syslinux package.
+Group: Default
+
+%description extras
+extras components for the syslinux package.
+
+
 %prep
 %setup -q -n syslinux-6.03
 %patch1 -p1
@@ -79,20 +87,20 @@ rm -rf %{buildroot}
 
 %files bin
 %defattr(-,root,root,-)
+%exclude /usr/bin/isohybrid.pl
+%exclude /usr/bin/keytab-lilo
+%exclude /usr/bin/lss16toppm
+%exclude /usr/bin/md5pass
+%exclude /usr/bin/mkdiskimage
+%exclude /usr/bin/ppmtolss16
+%exclude /usr/bin/pxelinux-options
+%exclude /usr/bin/sha1pass
+%exclude /usr/bin/syslinux2ansi
 /usr/bin/extlinux
 /usr/bin/gethostip
 /usr/bin/isohybrid
-/usr/bin/isohybrid.pl
-/usr/bin/keytab-lilo
-/usr/bin/lss16toppm
-/usr/bin/md5pass
 /usr/bin/memdiskfind
-/usr/bin/mkdiskimage
-/usr/bin/ppmtolss16
-/usr/bin/pxelinux-options
-/usr/bin/sha1pass
 /usr/bin/syslinux
-/usr/bin/syslinux2ansi
 
 %files data
 %defattr(-,root,root,-)
@@ -472,3 +480,15 @@ rm -rf %{buildroot}
 /usr/share/syslinux/com32/include/unistd.h
 /usr/share/syslinux/com32/include/zconf.h
 /usr/share/syslinux/com32/include/zlib.h
+
+%files extras
+%defattr(-,root,root,-)
+/usr/bin/isohybrid.pl
+/usr/bin/keytab-lilo
+/usr/bin/lss16toppm
+/usr/bin/md5pass
+/usr/bin/mkdiskimage
+/usr/bin/ppmtolss16
+/usr/bin/pxelinux-options
+/usr/bin/sha1pass
+/usr/bin/syslinux2ansi
