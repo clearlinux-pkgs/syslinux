@@ -4,13 +4,14 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 6
+Release  : 7
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
 Group    : Development/Tools
-License  : BSD-2-Clause-NetBSD BSD-3-Clause GPL-2.0 Libpng MIT
+License  : BSD-2-Clause-NetBSD BSD-3-Clause CC-BY-SA-3.0 GPL-2.0 Libpng MIT
 Requires: syslinux-bin
+Requires: syslinux-doc
 Requires: syslinux-data
 BuildRequires : asciidoc
 BuildRequires : nasm-bin
@@ -18,6 +19,7 @@ BuildRequires : pkgconfig(uuid)
 Patch1: 0035-SYSAPPEND-Fix-space-stripping.patch
 Patch2: fix-alignment-change-gcc-5.patch
 Patch3: dont-guess-section-alignment.patch
+Patch4: build-fix-mandir.patch
 
 %description
 SYSLINUX is a suite of bootloaders, currently supporting DOS FAT
@@ -53,6 +55,14 @@ Provides: syslinux-devel
 dev components for the syslinux package.
 
 
+%package doc
+Summary: doc components for the syslinux package.
+Group: Documentation
+
+%description doc
+doc components for the syslinux package.
+
+
 %package extras
 Summary: extras components for the syslinux package.
 Group: Default
@@ -66,8 +76,10 @@ extras components for the syslinux package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
+export LANG=C
 make V=1  %{?_smp_mflags}
 
 %install
@@ -76,14 +88,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/usr/man/man1/extlinux.1
-/usr/man/man1/gethostip.1
-/usr/man/man1/isohybrid.1
-/usr/man/man1/lss16toppm.1
-/usr/man/man1/memdiskfind.1
-/usr/man/man1/ppmtolss16.1
-/usr/man/man1/syslinux.1
-/usr/man/man1/syslinux2ansi.1
 
 %files bin
 %defattr(-,root,root,-)
@@ -480,6 +484,10 @@ rm -rf %{buildroot}
 /usr/share/syslinux/com32/include/unistd.h
 /usr/share/syslinux/com32/include/zconf.h
 /usr/share/syslinux/com32/include/zlib.h
+
+%files doc
+%defattr(-,root,root,-)
+%doc /usr/share/man/man1/*
 
 %files extras
 %defattr(-,root,root,-)
