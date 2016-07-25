@@ -1,0 +1,11 @@
+--- syslinux-6.03/mk/syslinux.mk.orig	2016-07-25 12:44:37.666126496 -0700
++++ syslinux-6.03/mk/syslinux.mk	2016-07-25 12:45:17.738205014 -0700
+@@ -24,7 +24,7 @@
+ DATADIR  = /usr/share
+ AUXDIR   = $(DATADIR)/syslinux
+ DIAGDIR  = $(AUXDIR)/diag
+-MANDIR	 = /usr/man
++MANDIR	 = $(DATADIR)/man
+ INCDIR   = /usr/include
+ TFTPBOOT = /tftpboot
+ COM32DIR = $(AUXDIR)/com32

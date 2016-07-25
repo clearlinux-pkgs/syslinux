@@ -1,3 +1,4 @@
 0035-SYSAPPEND-Fix-space-stripping.patch
 fix-alignment-change-gcc-5.patch
 dont-guess-section-alignment.patch
+build-fix-mandir.patch
