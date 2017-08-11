@@ -160,17 +160,14 @@
 /usr/share/syslinux/ifcpu64.c32
 /usr/share/syslinux/ifmemdsk.c32
 /usr/share/syslinux/ifplop.c32
-/usr/share/syslinux/isohdpfx.bin
 /usr/share/syslinux/isohdpfx_c.bin
 /usr/share/syslinux/isohdpfx_f.bin
 /usr/share/syslinux/isohdppx.bin
 /usr/share/syslinux/isohdppx_c.bin
 /usr/share/syslinux/isohdppx_f.bin
 /usr/share/syslinux/isolinux-debug.bin
-/usr/share/syslinux/isolinux.bin
 /usr/share/syslinux/kbdmap.c32
 /usr/share/syslinux/kontron_wdt.c32
-/usr/share/syslinux/ldlinux.c32
 /usr/share/syslinux/lfs.c32
 /usr/share/syslinux/libcom32.c32
 /usr/share/syslinux/libgpl.c32

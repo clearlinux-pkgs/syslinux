@@ -2,3 +2,4 @@
 fix-alignment-change-gcc-5.patch
 dont-guess-section-alignment.patch
 build-fix-mandir.patch
+0003-Fix-ldlinux.elf-Not-enough-room-for-program-headers.patch

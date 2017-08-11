@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 10
+Release  : 11
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -20,6 +20,7 @@ Patch1: 0035-SYSAPPEND-Fix-space-stripping.patch
 Patch2: fix-alignment-change-gcc-5.patch
 Patch3: dont-guess-section-alignment.patch
 Patch4: build-fix-mandir.patch
+Patch5: 0003-Fix-ldlinux.elf-Not-enough-room-for-program-headers.patch
 
 %description
 SYSLINUX is a suite of bootloaders, currently supporting DOS FAT
@@ -77,12 +78,18 @@ extras components for the syslinux package.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
+export SOURCE_DATE_EPOCH=1502483005
 make V=1  %{?_smp_mflags}
 
 %install
+export SOURCE_DATE_EPOCH=1502483005
 rm -rf %{buildroot}
 %make_install
 
@@ -268,17 +275,14 @@ rm -rf %{buildroot}
 %exclude /usr/share/syslinux/ifcpu64.c32
 %exclude /usr/share/syslinux/ifmemdsk.c32
 %exclude /usr/share/syslinux/ifplop.c32
-%exclude /usr/share/syslinux/isohdpfx.bin
 %exclude /usr/share/syslinux/isohdpfx_c.bin
 %exclude /usr/share/syslinux/isohdpfx_f.bin
 %exclude /usr/share/syslinux/isohdppx.bin
 %exclude /usr/share/syslinux/isohdppx_c.bin
 %exclude /usr/share/syslinux/isohdppx_f.bin
 %exclude /usr/share/syslinux/isolinux-debug.bin
-%exclude /usr/share/syslinux/isolinux.bin
 %exclude /usr/share/syslinux/kbdmap.c32
 %exclude /usr/share/syslinux/kontron_wdt.c32
-%exclude /usr/share/syslinux/ldlinux.c32
 %exclude /usr/share/syslinux/lfs.c32
 %exclude /usr/share/syslinux/libcom32.c32
 %exclude /usr/share/syslinux/libgpl.c32
@@ -319,6 +323,9 @@ rm -rf %{buildroot}
 %exclude /usr/share/syslinux/zzjson.c32
 /usr/share/syslinux/efi64/syslinux.efi
 /usr/share/syslinux/gptmbr.bin
+/usr/share/syslinux/isohdpfx.bin
+/usr/share/syslinux/isolinux.bin
+/usr/share/syslinux/ldlinux.c32
 
 %files dev
 %defattr(-,root,root,-)
