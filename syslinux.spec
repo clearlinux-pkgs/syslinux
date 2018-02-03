@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 12
+Release  : 13
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -85,11 +85,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1502483005
-make V=1  %{?_smp_mflags}
+export SOURCE_DATE_EPOCH=1517702064
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1502483005
+export SOURCE_DATE_EPOCH=1517702064
 rm -rf %{buildroot}
 %make_install
 
