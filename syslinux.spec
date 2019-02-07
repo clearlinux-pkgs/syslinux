@@ -4,23 +4,27 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 15
+Release  : 16
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
 Group    : Development/Tools
 License  : BSD-2-Clause-NetBSD BSD-3-Clause CC-BY-SA-3.0 GPL-2.0 Libpng MIT
-Requires: syslinux-bin
-Requires: syslinux-doc
-Requires: syslinux-data
+Requires: syslinux-bin = %{version}-%{release}
+Requires: syslinux-data = %{version}-%{release}
+Requires: syslinux-license = %{version}-%{release}
+Requires: syslinux-man = %{version}-%{release}
 BuildRequires : asciidoc
 BuildRequires : nasm-bin
-BuildRequires : pkgconfig(uuid)
+BuildRequires : util-linux-dev
 Patch1: 0035-SYSAPPEND-Fix-space-stripping.patch
 Patch2: fix-alignment-change-gcc-5.patch
 Patch3: dont-guess-section-alignment.patch
 Patch4: build-fix-mandir.patch
 Patch5: 0003-Fix-ldlinux.elf-Not-enough-room-for-program-headers.patch
+Patch6: Include-sysmacros.patch
+Patch7: Update-zlib-to-1.2.11.patch
+Patch8: Update-libpng-to-1.6.36.patch
 
 %description
 SYSLINUX is a suite of bootloaders, currently supporting DOS FAT
@@ -31,7 +35,9 @@ MEMDISK, which loads legacy operating systems from these media.
 %package bin
 Summary: bin components for the syslinux package.
 Group: Binaries
-Requires: syslinux-data
+Requires: syslinux-data = %{version}-%{release}
+Requires: syslinux-license = %{version}-%{release}
+Requires: syslinux-man = %{version}-%{release}
 
 %description bin
 bin components for the syslinux package.
@@ -48,20 +54,12 @@ data components for the syslinux package.
 %package dev
 Summary: dev components for the syslinux package.
 Group: Development
-Requires: syslinux-bin
-Requires: syslinux-data
-Provides: syslinux-devel
+Requires: syslinux-bin = %{version}-%{release}
+Requires: syslinux-data = %{version}-%{release}
+Provides: syslinux-devel = %{version}-%{release}
 
 %description dev
 dev components for the syslinux package.
-
-
-%package doc
-Summary: doc components for the syslinux package.
-Group: Documentation
-
-%description doc
-doc components for the syslinux package.
 
 
 %package extras
@@ -72,6 +70,22 @@ Group: Default
 extras components for the syslinux package.
 
 
+%package license
+Summary: license components for the syslinux package.
+Group: Default
+
+%description license
+license components for the syslinux package.
+
+
+%package man
+Summary: man components for the syslinux package.
+Group: Default
+
+%description man
+man components for the syslinux package.
+
+
 %prep
 %setup -q -n syslinux-6.03
 %patch1 -p1
@@ -79,18 +93,32 @@ extras components for the syslinux package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517702064
+export SOURCE_DATE_EPOCH=1549498994
 make  %{?_smp_mflags}
 
+
 %install
-export SOURCE_DATE_EPOCH=1517702064
+export SOURCE_DATE_EPOCH=1549498994
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
+cp COPYING %{buildroot}/usr/share/package-licenses/syslinux/COPYING
+cp com32/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/com32_LICENCE
+cp com32/lib/libpng/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/com32_lib_libpng_LICENSE
+cp core/lwip/COPYING %{buildroot}/usr/share/package-licenses/syslinux/core_lwip_COPYING
+cp doc/logo/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/doc_logo_LICENSE
+cp gnu-efi/gnu-efi-3.0/debian/copyright %{buildroot}/usr/share/package-licenses/syslinux/gnu-efi_gnu-efi-3.0_debian_copyright
+cp gpxe/COPYING %{buildroot}/usr/share/package-licenses/syslinux/gpxe_COPYING
+cp gpxe/COPYRIGHTS %{buildroot}/usr/share/package-licenses/syslinux/gpxe_COPYRIGHTS
+cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/gpxe_src_include_gpxe_efi_LICENCE
 %make_install
 
 %files
@@ -406,6 +434,7 @@ rm -rf %{buildroot}
 /usr/share/syslinux/com32/include/gplinclude/memory.h
 /usr/share/syslinux/com32/include/gplinclude/vpd/vpd.h
 /usr/share/syslinux/com32/include/gplinclude/zzjson/zzjson.h
+/usr/share/syslinux/com32/include/gzguts.h
 /usr/share/syslinux/com32/include/hw/vga.h
 /usr/share/syslinux/com32/include/ilog2.h
 /usr/share/syslinux/com32/include/inttypes.h
@@ -426,6 +455,11 @@ rm -rf %{buildroot}
 /usr/share/syslinux/com32/include/netinet/in.h
 /usr/share/syslinux/com32/include/png.h
 /usr/share/syslinux/com32/include/pngconf.h
+/usr/share/syslinux/com32/include/pngdebug.h
+/usr/share/syslinux/com32/include/pnginfo.h
+/usr/share/syslinux/com32/include/pnglibconf.h
+/usr/share/syslinux/com32/include/pngpriv.h
+/usr/share/syslinux/com32/include/pngstruct.h
 /usr/share/syslinux/com32/include/refstr.h
 /usr/share/syslinux/com32/include/setjmp.h
 /usr/share/syslinux/com32/include/sort.h
@@ -492,10 +526,6 @@ rm -rf %{buildroot}
 /usr/share/syslinux/com32/include/zconf.h
 /usr/share/syslinux/com32/include/zlib.h
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
-
 %files extras
 %defattr(-,root,root,-)
 /usr/bin/isohybrid.pl
@@ -507,3 +537,26 @@ rm -rf %{buildroot}
 /usr/bin/pxelinux-options
 /usr/bin/sha1pass
 /usr/bin/syslinux2ansi
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/syslinux/COPYING
+/usr/share/package-licenses/syslinux/com32_LICENCE
+/usr/share/package-licenses/syslinux/com32_lib_libpng_LICENSE
+/usr/share/package-licenses/syslinux/core_lwip_COPYING
+/usr/share/package-licenses/syslinux/doc_logo_LICENSE
+/usr/share/package-licenses/syslinux/gnu-efi_gnu-efi-3.0_debian_copyright
+/usr/share/package-licenses/syslinux/gpxe_COPYING
+/usr/share/package-licenses/syslinux/gpxe_COPYRIGHTS
+/usr/share/package-licenses/syslinux/gpxe_src_include_gpxe_efi_LICENCE
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/extlinux.1
+/usr/share/man/man1/gethostip.1
+/usr/share/man/man1/isohybrid.1
+/usr/share/man/man1/lss16toppm.1
+/usr/share/man/man1/memdiskfind.1
+/usr/share/man/man1/ppmtolss16.1
+/usr/share/man/man1/syslinux.1
+/usr/share/man/man1/syslinux2ansi.1

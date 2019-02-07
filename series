@@ -3,3 +3,6 @@ fix-alignment-change-gcc-5.patch
 dont-guess-section-alignment.patch
 build-fix-mandir.patch
 0003-Fix-ldlinux.elf-Not-enough-room-for-program-headers.patch
+Include-sysmacros.patch
+Update-zlib-to-1.2.11.patch
+Update-libpng-to-1.6.36.patch
