@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 19
+Release  : 20
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -56,7 +56,6 @@ Group: Development
 Requires: syslinux-bin = %{version}-%{release}
 Requires: syslinux-data = %{version}-%{release}
 Provides: syslinux-devel = %{version}-%{release}
-Requires: syslinux = %{version}-%{release}
 
 %description dev
 dev components for the syslinux package.
@@ -102,7 +101,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1554756623
+export SOURCE_DATE_EPOCH=1554844363
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -114,7 +113,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1554756623
+export SOURCE_DATE_EPOCH=1554844363
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp COPYING %{buildroot}/usr/share/package-licenses/syslinux/COPYING
@@ -323,7 +322,6 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 %exclude /usr/share/syslinux/libgpl.c32
 %exclude /usr/share/syslinux/liblua.c32
 %exclude /usr/share/syslinux/libmenu.c32
-%exclude /usr/share/syslinux/libutil.c32
 %exclude /usr/share/syslinux/linux.c32
 %exclude /usr/share/syslinux/lpxelinux.0
 %exclude /usr/share/syslinux/ls.c32
@@ -334,7 +332,6 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 %exclude /usr/share/syslinux/mbr_f.bin
 %exclude /usr/share/syslinux/memdisk
 %exclude /usr/share/syslinux/meminfo.c32
-%exclude /usr/share/syslinux/menu.c32
 %exclude /usr/share/syslinux/pci.c32
 %exclude /usr/share/syslinux/pcitest.c32
 %exclude /usr/share/syslinux/pmload.c32
@@ -361,6 +358,8 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 /usr/share/syslinux/isohdpfx.bin
 /usr/share/syslinux/isolinux.bin
 /usr/share/syslinux/ldlinux.c32
+/usr/share/syslinux/libutil.c32
+/usr/share/syslinux/menu.c32
 
 %files dev
 %defattr(-,root,root,-)
@@ -717,7 +716,6 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 /usr/share/syslinux/libgpl.c32
 /usr/share/syslinux/liblua.c32
 /usr/share/syslinux/libmenu.c32
-/usr/share/syslinux/libutil.c32
 /usr/share/syslinux/linux.c32
 /usr/share/syslinux/lpxelinux.0
 /usr/share/syslinux/ls.c32
@@ -728,7 +726,6 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 /usr/share/syslinux/mbr_f.bin
 /usr/share/syslinux/memdisk
 /usr/share/syslinux/meminfo.c32
-/usr/share/syslinux/menu.c32
 /usr/share/syslinux/pci.c32
 /usr/share/syslinux/pcitest.c32
 /usr/share/syslinux/pmload.c32

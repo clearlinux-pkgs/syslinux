@@ -180,7 +180,6 @@
 /usr/share/syslinux/libgpl.c32
 /usr/share/syslinux/liblua.c32
 /usr/share/syslinux/libmenu.c32
-/usr/share/syslinux/libutil.c32
 /usr/share/syslinux/linux.c32
 /usr/share/syslinux/lpxelinux.0
 /usr/share/syslinux/ls.c32
@@ -191,7 +190,6 @@
 /usr/share/syslinux/mbr_f.bin
 /usr/share/syslinux/memdisk
 /usr/share/syslinux/meminfo.c32
-/usr/share/syslinux/menu.c32
 /usr/share/syslinux/pci.c32
 /usr/share/syslinux/pcitest.c32
 /usr/share/syslinux/pmload.c32
