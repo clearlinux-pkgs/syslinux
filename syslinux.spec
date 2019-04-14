@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 20
+Release  : 21
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : BSD-2-Clause-NetBSD BSD-3-Clause CC-BY-SA-3.0 GPL-2.0 Libpng MIT
 Requires: syslinux-bin = %{version}-%{release}
 Requires: syslinux-data = %{version}-%{release}
+Requires: syslinux-extras-perl = %{version}-%{release}
 Requires: syslinux-license = %{version}-%{release}
 Requires: syslinux-man = %{version}-%{release}
 BuildRequires : asciidoc
@@ -56,6 +57,7 @@ Group: Development
 Requires: syslinux-bin = %{version}-%{release}
 Requires: syslinux-data = %{version}-%{release}
 Provides: syslinux-devel = %{version}-%{release}
+Requires: syslinux = %{version}-%{release}
 
 %description dev
 dev components for the syslinux package.
@@ -67,6 +69,14 @@ Group: Default
 
 %description extras
 extras components for the syslinux package.
+
+
+%package extras-perl
+Summary: extras-perl components for the syslinux package.
+Group: Default
+
+%description extras-perl
+extras-perl components for the syslinux package.
 
 
 %package license
@@ -101,7 +111,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1554844363
+export SOURCE_DATE_EPOCH=1555255153
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -113,7 +123,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1554844363
+export SOURCE_DATE_EPOCH=1555255153
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp COPYING %{buildroot}/usr/share/package-licenses/syslinux/COPYING
@@ -747,6 +757,10 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 /usr/share/syslinux/vpdtest.c32
 /usr/share/syslinux/whichsys.c32
 /usr/share/syslinux/zzjson.c32
+
+%files extras-perl
+%defattr(-,root,root,-)
+/usr/bin/isohybrid.pl
 
 %files license
 %defattr(0644,root,root,0755)
