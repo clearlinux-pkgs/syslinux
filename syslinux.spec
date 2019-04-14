@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 21
+Release  : 22
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -12,7 +12,6 @@ Group    : Development/Tools
 License  : BSD-2-Clause-NetBSD BSD-3-Clause CC-BY-SA-3.0 GPL-2.0 Libpng MIT
 Requires: syslinux-bin = %{version}-%{release}
 Requires: syslinux-data = %{version}-%{release}
-Requires: syslinux-extras-perl = %{version}-%{release}
 Requires: syslinux-license = %{version}-%{release}
 Requires: syslinux-man = %{version}-%{release}
 BuildRequires : asciidoc
@@ -111,7 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555255153
+export SOURCE_DATE_EPOCH=1555255383
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -123,7 +122,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1555255153
+export SOURCE_DATE_EPOCH=1555255383
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp COPYING %{buildroot}/usr/share/package-licenses/syslinux/COPYING
