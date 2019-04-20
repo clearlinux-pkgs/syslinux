@@ -1,1 +1,1 @@
-files = ['/usr/bin/isohybrid.pl']
+files = ['/usr/bin/isohybrid.pl', '/usr/bin/keytab-lilo', '/usr/bin/lss16toppm', '/usr/bin/md5pass', '/usr/bin/mkdiskimage', '/usr/bin/ppmtolss16', '/usr/bin/pxelinux-options', '/usr/bin/sha1pass', '/usr/bin/syslinux2ansi']

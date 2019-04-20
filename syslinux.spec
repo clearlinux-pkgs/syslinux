@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 23
+Release  : 24
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -110,7 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555780007
+export SOURCE_DATE_EPOCH=1555799240
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -122,7 +122,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1555780007
+export SOURCE_DATE_EPOCH=1555799240
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp COPYING %{buildroot}/usr/share/package-licenses/syslinux/COPYING
@@ -543,14 +543,6 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 
 %files extras
 %defattr(-,root,root,-)
-/usr/bin/keytab-lilo
-/usr/bin/lss16toppm
-/usr/bin/md5pass
-/usr/bin/mkdiskimage
-/usr/bin/ppmtolss16
-/usr/bin/pxelinux-options
-/usr/bin/sha1pass
-/usr/bin/syslinux2ansi
 /usr/share/syslinux/altmbr.bin
 /usr/share/syslinux/altmbr_c.bin
 /usr/share/syslinux/altmbr_f.bin
@@ -759,6 +751,14 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 %files extras-perl
 %defattr(-,root,root,-)
 /usr/bin/isohybrid.pl
+/usr/bin/keytab-lilo
+/usr/bin/lss16toppm
+/usr/bin/md5pass
+/usr/bin/mkdiskimage
+/usr/bin/ppmtolss16
+/usr/bin/pxelinux-options
+/usr/bin/sha1pass
+/usr/bin/syslinux2ansi
 
 %files license
 %defattr(0644,root,root,0755)
