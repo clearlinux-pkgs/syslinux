@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 24
+Release  : 25
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -25,6 +25,7 @@ Patch5: 0003-Fix-ldlinux.elf-Not-enough-room-for-program-headers.patch
 Patch6: Include-sysmacros.patch
 Patch7: Update-zlib-to-1.2.11.patch
 Patch8: Update-libpng-to-1.6.36.patch
+Patch9: build-fix-noPIE.patch
 
 %description
 SYSLINUX is a suite of bootloaders, currently supporting DOS FAT
@@ -104,6 +105,7 @@ man components for the syslinux package.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/

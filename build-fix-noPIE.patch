@@ -1,0 +1,14 @@
+diff --git a/gpxe/src/arch/i386/Makefile b/gpxe/src/arch/i386/Makefile
+index dd8da80..23fb19a 100644
+--- a/gpxe/src/arch/i386/Makefile
++++ b/gpxe/src/arch/i386/Makefile
+@@ -67,6 +67,9 @@ CFLAGS		+= -fshort-wchar
+ #
+ CFLAGS			+= -Ui386
+ 
++# No PIE flags
++CFLAGS			+= -fno-PIE
++
+ # Locations of utilities
+ #
+ ISOLINUX_BIN	= /usr/lib/syslinux/isolinux.bin
