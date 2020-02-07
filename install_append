@@ -1,0 +1,1 @@
+cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools

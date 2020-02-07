@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 25
+Release  : 26
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -71,14 +71,6 @@ Group: Default
 extras components for the syslinux package.
 
 
-%package extras-perl
-Summary: extras-perl components for the syslinux package.
-Group: Default
-
-%description extras-perl
-extras-perl components for the syslinux package.
-
-
 %package license
 Summary: license components for the syslinux package.
 Group: Default
@@ -97,6 +89,7 @@ man components for the syslinux package.
 
 %prep
 %setup -q -n syslinux-6.03
+cd %{_builddir}/syslinux-6.03
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -111,8 +104,9 @@ man components for the syslinux package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1555799240
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1581110800
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -124,246 +118,46 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1555799240
+export SOURCE_DATE_EPOCH=1581110800
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
-cp COPYING %{buildroot}/usr/share/package-licenses/syslinux/COPYING
-cp com32/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/com32_LICENCE
-cp com32/lib/libpng/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/com32_lib_libpng_LICENSE
-cp core/lwip/COPYING %{buildroot}/usr/share/package-licenses/syslinux/core_lwip_COPYING
-cp doc/logo/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/doc_logo_LICENSE
-cp gnu-efi/gnu-efi-3.0/debian/copyright %{buildroot}/usr/share/package-licenses/syslinux/gnu-efi_gnu-efi-3.0_debian_copyright
-cp gpxe/COPYING %{buildroot}/usr/share/package-licenses/syslinux/gpxe_COPYING
-cp gpxe/COPYRIGHTS %{buildroot}/usr/share/package-licenses/syslinux/gpxe_COPYRIGHTS
-cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/gpxe_src_include_gpxe_efi_LICENCE
+cp %{_builddir}/syslinux-6.03/COPYING %{buildroot}/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
+cp %{_builddir}/syslinux-6.03/com32/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/eb817b38695a2534223d9b546fa4c8807f1de905
+cp %{_builddir}/syslinux-6.03/com32/lib/libpng/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/dbfb42f6e975ca9fd5dd96176b31975a9b068220
+cp %{_builddir}/syslinux-6.03/core/lwip/COPYING %{buildroot}/usr/share/package-licenses/syslinux/f32e378a7ff5a691eaab216ea38ff8b080be3842
+cp %{_builddir}/syslinux-6.03/doc/logo/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/f9d0b2a1fcdbb836fa960394efa0cac6eb6de36b
+cp %{_builddir}/syslinux-6.03/gnu-efi/gnu-efi-3.0/debian/copyright %{buildroot}/usr/share/package-licenses/syslinux/d6c615f4c189cf3509088e83b18a5d2484648b4f
+cp %{_builddir}/syslinux-6.03/gpxe/COPYING %{buildroot}/usr/share/package-licenses/syslinux/075d599585584bb0e4b526f5c40cb6b17e0da35a
+cp %{_builddir}/syslinux-6.03/gpxe/COPYRIGHTS %{buildroot}/usr/share/package-licenses/syslinux/4cd3dfec92fe09937404f95803befd4005b1b5cc
+cp %{_builddir}/syslinux-6.03/gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/4822a303f3788c0c67164045ad9eda0b996e91d4
 %make_install
+## install_append content
+cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools
+## install_append end
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
-%exclude /usr/bin/isohybrid.pl
-%exclude /usr/bin/keytab-lilo
-%exclude /usr/bin/lss16toppm
-%exclude /usr/bin/md5pass
-%exclude /usr/bin/mkdiskimage
-%exclude /usr/bin/ppmtolss16
-%exclude /usr/bin/pxelinux-options
-%exclude /usr/bin/sha1pass
-%exclude /usr/bin/syslinux2ansi
 /usr/bin/extlinux
 /usr/bin/gethostip
 /usr/bin/isohybrid
+/usr/bin/isohybrid.pl
+/usr/bin/keytab-lilo
+/usr/bin/lss16toppm
+/usr/bin/md5pass
 /usr/bin/memdiskfind
+/usr/bin/mkdiskimage
+/usr/bin/ppmtolss16
+/usr/bin/pxelinux-options
+/usr/bin/sha1pass
 /usr/bin/syslinux
+/usr/bin/syslinux-nomtools
+/usr/bin/syslinux2ansi
 
 %files data
 %defattr(-,root,root,-)
-%exclude /usr/share/syslinux/altmbr.bin
-%exclude /usr/share/syslinux/altmbr_c.bin
-%exclude /usr/share/syslinux/altmbr_f.bin
-%exclude /usr/share/syslinux/cat.c32
-%exclude /usr/share/syslinux/chain.c32
-%exclude /usr/share/syslinux/cmd.c32
-%exclude /usr/share/syslinux/cmenu.c32
-%exclude /usr/share/syslinux/com32/com32.ld
-%exclude /usr/share/syslinux/com32/include/gplinclude/README
-%exclude /usr/share/syslinux/com32/libgpl.c32
-%exclude /usr/share/syslinux/config.c32
-%exclude /usr/share/syslinux/cptime.c32
-%exclude /usr/share/syslinux/cpu.c32
-%exclude /usr/share/syslinux/cpuid.c32
-%exclude /usr/share/syslinux/cpuidtest.c32
-%exclude /usr/share/syslinux/debug.c32
-%exclude /usr/share/syslinux/dhcp.c32
-%exclude /usr/share/syslinux/diag/geodsp1s.img.xz
-%exclude /usr/share/syslinux/diag/geodspms.img.xz
-%exclude /usr/share/syslinux/diag/handoff.bin
-%exclude /usr/share/syslinux/disk.c32
-%exclude /usr/share/syslinux/dmi.c32
-%exclude /usr/share/syslinux/dmitest.c32
-%exclude /usr/share/syslinux/dosutil/copybs.com
-%exclude /usr/share/syslinux/dosutil/eltorito.sys
-%exclude /usr/share/syslinux/dosutil/mdiskchk.com
-%exclude /usr/share/syslinux/efi32/cat.c32
-%exclude /usr/share/syslinux/efi32/chain.c32
-%exclude /usr/share/syslinux/efi32/cmd.c32
-%exclude /usr/share/syslinux/efi32/cmenu.c32
-%exclude /usr/share/syslinux/efi32/config.c32
-%exclude /usr/share/syslinux/efi32/cptime.c32
-%exclude /usr/share/syslinux/efi32/cpu.c32
-%exclude /usr/share/syslinux/efi32/cpuid.c32
-%exclude /usr/share/syslinux/efi32/cpuidtest.c32
-%exclude /usr/share/syslinux/efi32/debug.c32
-%exclude /usr/share/syslinux/efi32/dhcp.c32
-%exclude /usr/share/syslinux/efi32/disk.c32
-%exclude /usr/share/syslinux/efi32/dmi.c32
-%exclude /usr/share/syslinux/efi32/dmitest.c32
-%exclude /usr/share/syslinux/efi32/elf.c32
-%exclude /usr/share/syslinux/efi32/ethersel.c32
-%exclude /usr/share/syslinux/efi32/gfxboot.c32
-%exclude /usr/share/syslinux/efi32/gpxecmd.c32
-%exclude /usr/share/syslinux/efi32/hdt.c32
-%exclude /usr/share/syslinux/efi32/hexdump.c32
-%exclude /usr/share/syslinux/efi32/host.c32
-%exclude /usr/share/syslinux/efi32/ifcpu.c32
-%exclude /usr/share/syslinux/efi32/ifcpu64.c32
-%exclude /usr/share/syslinux/efi32/ifmemdsk.c32
-%exclude /usr/share/syslinux/efi32/ifplop.c32
-%exclude /usr/share/syslinux/efi32/kbdmap.c32
-%exclude /usr/share/syslinux/efi32/kontron_wdt.c32
-%exclude /usr/share/syslinux/efi32/ldlinux.e32
-%exclude /usr/share/syslinux/efi32/lfs.c32
-%exclude /usr/share/syslinux/efi32/libcom32.c32
-%exclude /usr/share/syslinux/efi32/libgpl.c32
-%exclude /usr/share/syslinux/efi32/liblua.c32
-%exclude /usr/share/syslinux/efi32/libmenu.c32
-%exclude /usr/share/syslinux/efi32/libutil.c32
-%exclude /usr/share/syslinux/efi32/linux.c32
-%exclude /usr/share/syslinux/efi32/ls.c32
-%exclude /usr/share/syslinux/efi32/lua.c32
-%exclude /usr/share/syslinux/efi32/mboot.c32
-%exclude /usr/share/syslinux/efi32/meminfo.c32
-%exclude /usr/share/syslinux/efi32/menu.c32
-%exclude /usr/share/syslinux/efi32/pci.c32
-%exclude /usr/share/syslinux/efi32/pcitest.c32
-%exclude /usr/share/syslinux/efi32/pmload.c32
-%exclude /usr/share/syslinux/efi32/poweroff.c32
-%exclude /usr/share/syslinux/efi32/prdhcp.c32
-%exclude /usr/share/syslinux/efi32/pwd.c32
-%exclude /usr/share/syslinux/efi32/pxechn.c32
-%exclude /usr/share/syslinux/efi32/reboot.c32
-%exclude /usr/share/syslinux/efi32/rosh.c32
-%exclude /usr/share/syslinux/efi32/sanboot.c32
-%exclude /usr/share/syslinux/efi32/sdi.c32
-%exclude /usr/share/syslinux/efi32/sysdump.c32
-%exclude /usr/share/syslinux/efi32/syslinux.c32
-%exclude /usr/share/syslinux/efi32/syslinux.efi
-%exclude /usr/share/syslinux/efi32/vesa.c32
-%exclude /usr/share/syslinux/efi32/vesainfo.c32
-%exclude /usr/share/syslinux/efi32/vesamenu.c32
-%exclude /usr/share/syslinux/efi32/vpdtest.c32
-%exclude /usr/share/syslinux/efi32/whichsys.c32
-%exclude /usr/share/syslinux/efi32/zzjson.c32
-%exclude /usr/share/syslinux/efi64/cat.c32
-%exclude /usr/share/syslinux/efi64/chain.c32
-%exclude /usr/share/syslinux/efi64/cmd.c32
-%exclude /usr/share/syslinux/efi64/cmenu.c32
-%exclude /usr/share/syslinux/efi64/config.c32
-%exclude /usr/share/syslinux/efi64/cptime.c32
-%exclude /usr/share/syslinux/efi64/cpu.c32
-%exclude /usr/share/syslinux/efi64/cpuid.c32
-%exclude /usr/share/syslinux/efi64/cpuidtest.c32
-%exclude /usr/share/syslinux/efi64/debug.c32
-%exclude /usr/share/syslinux/efi64/dhcp.c32
-%exclude /usr/share/syslinux/efi64/disk.c32
-%exclude /usr/share/syslinux/efi64/dmi.c32
-%exclude /usr/share/syslinux/efi64/dmitest.c32
-%exclude /usr/share/syslinux/efi64/elf.c32
-%exclude /usr/share/syslinux/efi64/ethersel.c32
-%exclude /usr/share/syslinux/efi64/gfxboot.c32
-%exclude /usr/share/syslinux/efi64/gpxecmd.c32
-%exclude /usr/share/syslinux/efi64/hdt.c32
-%exclude /usr/share/syslinux/efi64/hexdump.c32
-%exclude /usr/share/syslinux/efi64/host.c32
-%exclude /usr/share/syslinux/efi64/ifcpu.c32
-%exclude /usr/share/syslinux/efi64/ifcpu64.c32
-%exclude /usr/share/syslinux/efi64/ifmemdsk.c32
-%exclude /usr/share/syslinux/efi64/ifplop.c32
-%exclude /usr/share/syslinux/efi64/kbdmap.c32
-%exclude /usr/share/syslinux/efi64/kontron_wdt.c32
-%exclude /usr/share/syslinux/efi64/ldlinux.e64
-%exclude /usr/share/syslinux/efi64/lfs.c32
-%exclude /usr/share/syslinux/efi64/libcom32.c32
-%exclude /usr/share/syslinux/efi64/libgpl.c32
-%exclude /usr/share/syslinux/efi64/liblua.c32
-%exclude /usr/share/syslinux/efi64/libmenu.c32
-%exclude /usr/share/syslinux/efi64/libutil.c32
-%exclude /usr/share/syslinux/efi64/linux.c32
-%exclude /usr/share/syslinux/efi64/ls.c32
-%exclude /usr/share/syslinux/efi64/lua.c32
-%exclude /usr/share/syslinux/efi64/mboot.c32
-%exclude /usr/share/syslinux/efi64/meminfo.c32
-%exclude /usr/share/syslinux/efi64/menu.c32
-%exclude /usr/share/syslinux/efi64/pci.c32
-%exclude /usr/share/syslinux/efi64/pcitest.c32
-%exclude /usr/share/syslinux/efi64/pmload.c32
-%exclude /usr/share/syslinux/efi64/poweroff.c32
-%exclude /usr/share/syslinux/efi64/prdhcp.c32
-%exclude /usr/share/syslinux/efi64/pwd.c32
-%exclude /usr/share/syslinux/efi64/pxechn.c32
-%exclude /usr/share/syslinux/efi64/reboot.c32
-%exclude /usr/share/syslinux/efi64/rosh.c32
-%exclude /usr/share/syslinux/efi64/sanboot.c32
-%exclude /usr/share/syslinux/efi64/sdi.c32
-%exclude /usr/share/syslinux/efi64/sysdump.c32
-%exclude /usr/share/syslinux/efi64/syslinux.c32
-%exclude /usr/share/syslinux/efi64/vesa.c32
-%exclude /usr/share/syslinux/efi64/vesainfo.c32
-%exclude /usr/share/syslinux/efi64/vesamenu.c32
-%exclude /usr/share/syslinux/efi64/vpdtest.c32
-%exclude /usr/share/syslinux/efi64/whichsys.c32
-%exclude /usr/share/syslinux/efi64/zzjson.c32
-%exclude /usr/share/syslinux/elf.c32
-%exclude /usr/share/syslinux/ethersel.c32
-%exclude /usr/share/syslinux/gfxboot.c32
-%exclude /usr/share/syslinux/gptmbr_c.bin
-%exclude /usr/share/syslinux/gptmbr_f.bin
-%exclude /usr/share/syslinux/gpxecmd.c32
-%exclude /usr/share/syslinux/gpxelinux.0
-%exclude /usr/share/syslinux/gpxelinuxk.0
-%exclude /usr/share/syslinux/hdt.c32
-%exclude /usr/share/syslinux/hexdump.c32
-%exclude /usr/share/syslinux/host.c32
-%exclude /usr/share/syslinux/ifcpu.c32
-%exclude /usr/share/syslinux/ifcpu64.c32
-%exclude /usr/share/syslinux/ifmemdsk.c32
-%exclude /usr/share/syslinux/ifplop.c32
-%exclude /usr/share/syslinux/isohdpfx_c.bin
-%exclude /usr/share/syslinux/isohdpfx_f.bin
-%exclude /usr/share/syslinux/isohdppx.bin
-%exclude /usr/share/syslinux/isohdppx_c.bin
-%exclude /usr/share/syslinux/isohdppx_f.bin
-%exclude /usr/share/syslinux/isolinux-debug.bin
-%exclude /usr/share/syslinux/kbdmap.c32
-%exclude /usr/share/syslinux/kontron_wdt.c32
-%exclude /usr/share/syslinux/lfs.c32
-%exclude /usr/share/syslinux/libcom32.c32
-%exclude /usr/share/syslinux/libgpl.c32
-%exclude /usr/share/syslinux/liblua.c32
-%exclude /usr/share/syslinux/libmenu.c32
-%exclude /usr/share/syslinux/linux.c32
-%exclude /usr/share/syslinux/lpxelinux.0
-%exclude /usr/share/syslinux/ls.c32
-%exclude /usr/share/syslinux/lua.c32
-%exclude /usr/share/syslinux/mboot.c32
-%exclude /usr/share/syslinux/mbr.bin
-%exclude /usr/share/syslinux/mbr_c.bin
-%exclude /usr/share/syslinux/mbr_f.bin
-%exclude /usr/share/syslinux/memdisk
-%exclude /usr/share/syslinux/meminfo.c32
-%exclude /usr/share/syslinux/pci.c32
-%exclude /usr/share/syslinux/pcitest.c32
-%exclude /usr/share/syslinux/pmload.c32
-%exclude /usr/share/syslinux/poweroff.c32
-%exclude /usr/share/syslinux/prdhcp.c32
-%exclude /usr/share/syslinux/pwd.c32
-%exclude /usr/share/syslinux/pxechn.c32
-%exclude /usr/share/syslinux/pxelinux.0
-%exclude /usr/share/syslinux/reboot.c32
-%exclude /usr/share/syslinux/rosh.c32
-%exclude /usr/share/syslinux/sanboot.c32
-%exclude /usr/share/syslinux/sdi.c32
-%exclude /usr/share/syslinux/sysdump.c32
-%exclude /usr/share/syslinux/syslinux.c32
-%exclude /usr/share/syslinux/syslinux.com
-%exclude /usr/share/syslinux/vesa.c32
-%exclude /usr/share/syslinux/vesainfo.c32
-%exclude /usr/share/syslinux/vesamenu.c32
-%exclude /usr/share/syslinux/vpdtest.c32
-%exclude /usr/share/syslinux/whichsys.c32
-%exclude /usr/share/syslinux/zzjson.c32
 /usr/share/syslinux/efi64/syslinux.efi
 /usr/share/syslinux/gptmbr.bin
 /usr/share/syslinux/isohdpfx.bin
@@ -750,29 +544,17 @@ cp gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/sys
 /usr/share/syslinux/whichsys.c32
 /usr/share/syslinux/zzjson.c32
 
-%files extras-perl
-%defattr(-,root,root,-)
-/usr/bin/isohybrid.pl
-/usr/bin/keytab-lilo
-/usr/bin/lss16toppm
-/usr/bin/md5pass
-/usr/bin/mkdiskimage
-/usr/bin/ppmtolss16
-/usr/bin/pxelinux-options
-/usr/bin/sha1pass
-/usr/bin/syslinux2ansi
-
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/syslinux/COPYING
-/usr/share/package-licenses/syslinux/com32_LICENCE
-/usr/share/package-licenses/syslinux/com32_lib_libpng_LICENSE
-/usr/share/package-licenses/syslinux/core_lwip_COPYING
-/usr/share/package-licenses/syslinux/doc_logo_LICENSE
-/usr/share/package-licenses/syslinux/gnu-efi_gnu-efi-3.0_debian_copyright
-/usr/share/package-licenses/syslinux/gpxe_COPYING
-/usr/share/package-licenses/syslinux/gpxe_COPYRIGHTS
-/usr/share/package-licenses/syslinux/gpxe_src_include_gpxe_efi_LICENCE
+/usr/share/package-licenses/syslinux/075d599585584bb0e4b526f5c40cb6b17e0da35a
+/usr/share/package-licenses/syslinux/4822a303f3788c0c67164045ad9eda0b996e91d4
+/usr/share/package-licenses/syslinux/4cd3dfec92fe09937404f95803befd4005b1b5cc
+/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
+/usr/share/package-licenses/syslinux/d6c615f4c189cf3509088e83b18a5d2484648b4f
+/usr/share/package-licenses/syslinux/dbfb42f6e975ca9fd5dd96176b31975a9b068220
+/usr/share/package-licenses/syslinux/eb817b38695a2534223d9b546fa4c8807f1de905
+/usr/share/package-licenses/syslinux/f32e378a7ff5a691eaab216ea38ff8b080be3842
+/usr/share/package-licenses/syslinux/f9d0b2a1fcdbb836fa960394efa0cac6eb6de36b
 
 %files man
 %defattr(0644,root,root,0755)
