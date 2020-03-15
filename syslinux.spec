@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 26
+Release  : 27
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -58,6 +58,7 @@ Requires: syslinux-bin = %{version}-%{release}
 Requires: syslinux-data = %{version}-%{release}
 Provides: syslinux-devel = %{version}-%{release}
 Requires: syslinux = %{version}-%{release}
+Requires: syslinux = %{version}-%{release}
 
 %description dev
 dev components for the syslinux package.
@@ -105,7 +106,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1581110800
+export SOURCE_DATE_EPOCH=1584292108
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -118,7 +120,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1581110800
+export SOURCE_DATE_EPOCH=1584292108
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp %{_builddir}/syslinux-6.03/COPYING %{buildroot}/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
@@ -143,18 +145,9 @@ cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools
 /usr/bin/extlinux
 /usr/bin/gethostip
 /usr/bin/isohybrid
-/usr/bin/isohybrid.pl
-/usr/bin/keytab-lilo
-/usr/bin/lss16toppm
-/usr/bin/md5pass
 /usr/bin/memdiskfind
-/usr/bin/mkdiskimage
-/usr/bin/ppmtolss16
-/usr/bin/pxelinux-options
-/usr/bin/sha1pass
 /usr/bin/syslinux
 /usr/bin/syslinux-nomtools
-/usr/bin/syslinux2ansi
 
 %files data
 %defattr(-,root,root,-)
@@ -339,6 +332,15 @@ cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools
 
 %files extras
 %defattr(-,root,root,-)
+/usr/bin/isohybrid.pl
+/usr/bin/keytab-lilo
+/usr/bin/lss16toppm
+/usr/bin/md5pass
+/usr/bin/mkdiskimage
+/usr/bin/ppmtolss16
+/usr/bin/pxelinux-options
+/usr/bin/sha1pass
+/usr/bin/syslinux2ansi
 /usr/share/syslinux/altmbr.bin
 /usr/share/syslinux/altmbr_c.bin
 /usr/share/syslinux/altmbr_f.bin
