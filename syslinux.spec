@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 27
+Release  : 28
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -72,6 +72,14 @@ Group: Default
 extras components for the syslinux package.
 
 
+%package extras-perl
+Summary: extras-perl components for the syslinux package.
+Group: Default
+
+%description extras-perl
+extras-perl components for the syslinux package.
+
+
 %package license
 Summary: license components for the syslinux package.
 Group: Default
@@ -106,7 +114,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1584292108
+export SOURCE_DATE_EPOCH=1584292722
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -120,7 +128,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1584292108
+export SOURCE_DATE_EPOCH=1584292722
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp %{_builddir}/syslinux-6.03/COPYING %{buildroot}/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
@@ -332,15 +340,6 @@ cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools
 
 %files extras
 %defattr(-,root,root,-)
-/usr/bin/isohybrid.pl
-/usr/bin/keytab-lilo
-/usr/bin/lss16toppm
-/usr/bin/md5pass
-/usr/bin/mkdiskimage
-/usr/bin/ppmtolss16
-/usr/bin/pxelinux-options
-/usr/bin/sha1pass
-/usr/bin/syslinux2ansi
 /usr/share/syslinux/altmbr.bin
 /usr/share/syslinux/altmbr_c.bin
 /usr/share/syslinux/altmbr_f.bin
@@ -545,6 +544,18 @@ cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools
 /usr/share/syslinux/vpdtest.c32
 /usr/share/syslinux/whichsys.c32
 /usr/share/syslinux/zzjson.c32
+
+%files extras-perl
+%defattr(-,root,root,-)
+/usr/bin/isohybrid.pl
+/usr/bin/keytab-lilo
+/usr/bin/lss16toppm
+/usr/bin/md5pass
+/usr/bin/mkdiskimage
+/usr/bin/ppmtolss16
+/usr/bin/pxelinux-options
+/usr/bin/sha1pass
+/usr/bin/syslinux2ansi
 
 %files license
 %defattr(0644,root,root,0755)
