@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 28
+Release  : 29
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -15,6 +15,8 @@ Requires: syslinux-data = %{version}-%{release}
 Requires: syslinux-license = %{version}-%{release}
 Requires: syslinux-man = %{version}-%{release}
 BuildRequires : asciidoc
+BuildRequires : gcc9
+BuildRequires : gcc9-dev
 BuildRequires : nasm-bin
 BuildRequires : util-linux-dev
 Patch1: 0035-SYSAPPEND-Fix-space-stripping.patch
@@ -57,7 +59,6 @@ Group: Development
 Requires: syslinux-bin = %{version}-%{release}
 Requires: syslinux-data = %{version}-%{release}
 Provides: syslinux-devel = %{version}-%{release}
-Requires: syslinux = %{version}-%{release}
 Requires: syslinux = %{version}-%{release}
 
 %description dev
@@ -114,21 +115,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1584292722
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1619057737
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
-make  %{?_smp_mflags}
+make  %{?_smp_mflags}  CC=gcc-9
 
 
 %install
-export SOURCE_DATE_EPOCH=1584292722
+export SOURCE_DATE_EPOCH=1619057737
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
 cp %{_builddir}/syslinux-6.03/COPYING %{buildroot}/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
