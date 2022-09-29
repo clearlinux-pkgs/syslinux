@@ -4,7 +4,7 @@
 #
 Name     : syslinux
 Version  : 6.03
-Release  : 29
+Release  : 30
 URL      : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Source0  : https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 Summary  : Kernel loader which uses a FAT, ext2/3 or iso9660 filesystem or a PXE network
@@ -111,35 +111,40 @@ cd %{_builddir}/syslinux-6.03
 %patch9 -p1
 
 %build
+## build_prepend content
+# Remove flags not supported in GCC 9
+CFLAGS="${CFLAGS/-mrelax-cmpxchg-loop/}"
+CFLAGS="${CFLAGS/-ftrivial-auto-var-init=zero/}"
+## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619057737
+export SOURCE_DATE_EPOCH=1664488558
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 make  %{?_smp_mflags}  CC=gcc-9
 
 
 %install
-export SOURCE_DATE_EPOCH=1619057737
+export SOURCE_DATE_EPOCH=1664488558
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/syslinux
-cp %{_builddir}/syslinux-6.03/COPYING %{buildroot}/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
-cp %{_builddir}/syslinux-6.03/com32/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/eb817b38695a2534223d9b546fa4c8807f1de905
-cp %{_builddir}/syslinux-6.03/com32/lib/libpng/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/dbfb42f6e975ca9fd5dd96176b31975a9b068220
-cp %{_builddir}/syslinux-6.03/core/lwip/COPYING %{buildroot}/usr/share/package-licenses/syslinux/f32e378a7ff5a691eaab216ea38ff8b080be3842
-cp %{_builddir}/syslinux-6.03/doc/logo/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/f9d0b2a1fcdbb836fa960394efa0cac6eb6de36b
-cp %{_builddir}/syslinux-6.03/gnu-efi/gnu-efi-3.0/debian/copyright %{buildroot}/usr/share/package-licenses/syslinux/d6c615f4c189cf3509088e83b18a5d2484648b4f
-cp %{_builddir}/syslinux-6.03/gpxe/COPYING %{buildroot}/usr/share/package-licenses/syslinux/075d599585584bb0e4b526f5c40cb6b17e0da35a
-cp %{_builddir}/syslinux-6.03/gpxe/COPYRIGHTS %{buildroot}/usr/share/package-licenses/syslinux/4cd3dfec92fe09937404f95803befd4005b1b5cc
-cp %{_builddir}/syslinux-6.03/gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/4822a303f3788c0c67164045ad9eda0b996e91d4
+cp %{_builddir}/syslinux-%{version}/COPYING %{buildroot}/usr/share/package-licenses/syslinux/74a8a6531a42e124df07ab5599aad63870fa0bd4
+cp %{_builddir}/syslinux-%{version}/com32/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/eb817b38695a2534223d9b546fa4c8807f1de905
+cp %{_builddir}/syslinux-%{version}/com32/lib/libpng/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/dbfb42f6e975ca9fd5dd96176b31975a9b068220
+cp %{_builddir}/syslinux-%{version}/core/lwip/COPYING %{buildroot}/usr/share/package-licenses/syslinux/f32e378a7ff5a691eaab216ea38ff8b080be3842
+cp %{_builddir}/syslinux-%{version}/doc/logo/LICENSE %{buildroot}/usr/share/package-licenses/syslinux/f9d0b2a1fcdbb836fa960394efa0cac6eb6de36b
+cp %{_builddir}/syslinux-%{version}/gnu-efi/gnu-efi-3.0/debian/copyright %{buildroot}/usr/share/package-licenses/syslinux/d6c615f4c189cf3509088e83b18a5d2484648b4f
+cp %{_builddir}/syslinux-%{version}/gpxe/COPYING %{buildroot}/usr/share/package-licenses/syslinux/075d599585584bb0e4b526f5c40cb6b17e0da35a
+cp %{_builddir}/syslinux-%{version}/gpxe/COPYRIGHTS %{buildroot}/usr/share/package-licenses/syslinux/4cd3dfec92fe09937404f95803befd4005b1b5cc
+cp %{_builddir}/syslinux-%{version}/gpxe/src/include/gpxe/efi/LICENCE %{buildroot}/usr/share/package-licenses/syslinux/4822a303f3788c0c67164045ad9eda0b996e91d4
 %make_install
 ## install_append content
 cp bios/linux/syslinux-nomtools %{buildroot}/usr/bin/syslinux-nomtools

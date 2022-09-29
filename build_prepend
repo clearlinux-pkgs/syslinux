@@ -1,0 +1,3 @@
+# Remove flags not supported in GCC 9
+CFLAGS="${CFLAGS/-mrelax-cmpxchg-loop/}"
+CFLAGS="${CFLAGS/-ftrivial-auto-var-init=zero/}"
